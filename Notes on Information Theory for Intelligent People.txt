@@ -1,0 +1,59 @@
+import math
+def H(probs):
+    _H = -sum([prob * math.log(prob, 2) for prob in probs])
+    return _H
+if __name__ == "__main__":
+    probs = [0.999, 0.0005, 0.0005]
+    print(H(probs))
+    probs = [0.33, 0.33, 0.33]
+    print(H(probs))
+
+One of the way of thinking about H(X) is the average number of steps or questions
+to ask before you know the answer to a question (is it a car, bird or tree)
+It does make sense to ask questions about highly probable items first and 
+the low probability ones later. So a low probable item is down in the tree. 
+This means a suitable metric should relect the high number of steps it takes 
+to reach a low probability item. Something like -log2(pron). 
+
+-log2(1.0) = 0
+-log2(0.0009765625) = 10
+
+H(X) is the basic quantity in information theory. In an important sense, all 
+the other quantities we’ll compute are variant on it. H(X) goes by a number of 
+different names: “uncertainty”, “information”, even “entropy” (a term from 
+the physical sciences, which we’ll return to later). It has units called bits.
+
+Say in the game the likelihood of all item is equally likely ie 
+P(car) = 0.33
+P(tree) = 0.33
+P(bird) = 0.33
+
+Then H = 1.58
+You need to ask 2 question or use 2 bits to represent this data
+
+If 
+
+P(car) = 1
+P(tree) = 0
+P(bird) = 0
+
+Then you know you don't need to ask any questions because no matter 
+what question you ask the answer is always a 'car'.  
+Also H = 0 for the case. So the quantity agress that you we needn't 
+represent it or ask any questions.
+
+So a highly skewd distribution has low information and a uniform 
+distribution has high information, that is, it takes more bits
+to describe the data.
+
+
+When the tree is optimal, the encoding is efficient. Computer 
+scientists recognize the construction of the optimal tree as 
+Huffman Encoding. Huffman Encoding is the most basic form of lossless
+compression. Huffman Encoding is an incredibly simple way to achieve optimal 
+transmission and storage, and it’s therefore widespread in the computer 
+world. When you “zip” something, the algorithm under the hood is very often 
+some variant of Huffman Encoding. It’s a lossless encoding, meaning that
+even though it generally finds a much faster way to transmit the information,
+nothing is lost. It just takes advantage of the biases in the source, giving
+nicknames or shortcuts to the most common things you say
